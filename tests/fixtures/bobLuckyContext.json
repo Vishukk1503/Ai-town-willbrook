@@ -1,0 +1,235 @@
+{
+  "source": "bob-lucky-corrected-live-town.json",
+  "conversationId": "c:3684",
+  "note": "Extracted recorded inputs/outcome. Complete source event arrays were not saved. Tests replay the recorded decline with the existing engine to obtain its event.",
+  "luckyId": "p:0",
+  "bobId": "p:2",
+  "luckyInventory": {
+    "fish": 0,
+    "meals": 0,
+    "rod": 1,
+    "seeds": 0,
+    "turnips": 0
+  },
+  "bobInventory": {
+    "fish": 0,
+    "meals": 2,
+    "rod": 0,
+    "seeds": 0,
+    "turnips": 8
+  },
+  "luckyOldEvents": [
+    {
+      "at": 1794155682092,
+      "id": 43,
+      "kind": "fish",
+      "text": "Lucky fished at the river, but did not catch anything.",
+      "witnesses": [
+        "p:0"
+      ]
+    },
+    {
+      "at": 1794155748060,
+      "id": 44,
+      "kind": "fish",
+      "text": "Lucky fished at the river, but did not catch anything.",
+      "witnesses": [
+        "p:0"
+      ]
+    },
+    {
+      "at": 1794155896748,
+      "id": 45,
+      "kind": "fish",
+      "text": "Lucky fished at the river, but did not catch anything.",
+      "witnesses": [
+        "p:0"
+      ]
+    },
+    {
+      "at": 1794155954172,
+      "id": 46,
+      "kind": "fish",
+      "text": "Lucky caught a river fish and put it in his bag.",
+      "witnesses": [
+        "p:0"
+      ]
+    },
+    {
+      "at": 1794156227466,
+      "id": 47,
+      "kind": "fish",
+      "text": "Lucky caught a river fish and put it in his bag.",
+      "witnesses": [
+        "p:0"
+      ]
+    },
+    {
+      "at": 1794158320481,
+      "id": 48,
+      "kind": "fish",
+      "text": "Lucky caught a river fish and put it in his bag.",
+      "witnesses": [
+        "p:0"
+      ]
+    }
+  ],
+  "bobOldEvents": [
+    {
+      "at": 1794107887515,
+      "id": 20,
+      "kind": "collect",
+      "text": "Bob collected two turnips from home into his bag.",
+      "witnesses": [
+        "p:2"
+      ]
+    },
+    {
+      "at": 1794107965387,
+      "id": 21,
+      "kind": "collect",
+      "text": "Bob collected two turnips from home into his bag.",
+      "witnesses": [
+        "p:2"
+      ]
+    },
+    {
+      "at": 1794107989435,
+      "id": 23,
+      "kind": "collect",
+      "text": "Bob collected two turnips from home into his bag.",
+      "witnesses": [
+        "p:2"
+      ]
+    },
+    {
+      "at": 1794108075835,
+      "id": 25,
+      "kind": "collect",
+      "text": "Bob collected two turnips from home into his bag.",
+      "witnesses": [
+        "p:2"
+      ]
+    },
+    {
+      "at": 1794108817727,
+      "id": 26,
+      "kind": "collect",
+      "text": "Bob collected two turnips from home into his bag.",
+      "witnesses": [
+        "p:2"
+      ]
+    },
+    {
+      "at": 1794108841775,
+      "id": 27,
+      "kind": "collect",
+      "text": "Bob collected two turnips from home into his bag.",
+      "witnesses": [
+        "p:2"
+      ]
+    }
+  ],
+  "openAgreement": {
+    "acceptedBy": [
+      "p:2"
+    ],
+    "cook": "p:4",
+    "counters": 0,
+    "created": 10868102,
+    "escrow": [],
+    "expires": 11108102,
+    "id": 61,
+    "inputs": [
+      {
+        "item": "turnips",
+        "owner": "p:2",
+        "quantity": 2
+      },
+      {
+        "item": "fish",
+        "owner": "p:0",
+        "quantity": 1
+      }
+    ],
+    "kind": "cook",
+    "outputs": [
+      {
+        "item": "meals",
+        "owner": "p:2",
+        "quantity": 1
+      },
+      {
+        "item": "meals",
+        "owner": "p:0",
+        "quantity": 1
+      },
+      {
+        "item": "meals",
+        "owner": "p:4",
+        "quantity": 1
+      }
+    ],
+    "participants": [
+      "p:2",
+      "p:0",
+      "p:4"
+    ],
+    "proposer": "p:2",
+    "recipe": "mixed",
+    "status": "open",
+    "thread": 61
+  },
+  "finalAgreement": {
+    "acceptedBy": [
+      "p:2"
+    ],
+    "cook": "p:4",
+    "counters": 0,
+    "created": 10868102,
+    "escrow": [],
+    "expires": 11108102,
+    "id": 61,
+    "inputs": [
+      {
+        "item": "turnips",
+        "owner": "p:2",
+        "quantity": 2
+      },
+      {
+        "item": "fish",
+        "owner": "p:0",
+        "quantity": 1
+      }
+    ],
+    "kind": "cook",
+    "outputs": [
+      {
+        "item": "meals",
+        "owner": "p:2",
+        "quantity": 1
+      },
+      {
+        "item": "meals",
+        "owner": "p:0",
+        "quantity": 1
+      },
+      {
+        "item": "meals",
+        "owner": "p:4",
+        "quantity": 1
+      }
+    ],
+    "participants": [
+      "p:2",
+      "p:0",
+      "p:4"
+    ],
+    "proposer": "p:2",
+    "recipe": "mixed",
+    "status": "declined",
+    "thread": 61
+  },
+  "declineAt": 1794175720240,
+  "bobOldAgreements": []
+}

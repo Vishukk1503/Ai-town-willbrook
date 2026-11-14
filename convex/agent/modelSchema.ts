@@ -1,0 +1,8 @@
+import {defineTable} from 'convex/server';
+import {v} from 'convex/values';
+export const modelTables={
+  modelBudgets:defineTable({limitMicros:v.number(),safetyMicros:v.number(),spentMicros:v.number(),reservedMicros:v.number(),createdAt:v.number()}),
+  modelSettings:defineTable({provider:v.union(v.literal('local'),v.literal('groq')),model:v.string(),overrides:v.array(v.object({name:v.string(),model:v.string()})),maxTokens:v.number(),rpm:v.number(),tpm:v.number(),dailyRequests:v.number(),cooldownUntil:v.optional(v.number())}),
+  modelRequests:defineTable({key:v.string(),provider:v.string(),model:v.string(),actor:v.string(),scope:v.string(),sessionId:v.optional(v.id('councilSessions')),status:v.string(),startedAt:v.number(),finishedAt:v.optional(v.number()),estimatedTokens:v.number(),inputTokens:v.optional(v.number()),outputTokens:v.optional(v.number()),reasoningTokens:v.optional(v.number()),ms:v.optional(v.number()),httpStatus:v.optional(v.number()),providerError:v.optional(v.object({message:v.optional(v.string()),code:v.optional(v.string()),type:v.optional(v.string()),param:v.optional(v.string())})),providerRequestId:v.optional(v.string()),error:v.optional(v.string()),content:v.optional(v.string()),remainingRequests:v.optional(v.number()),remainingTokens:v.optional(v.number()),retryAfterSeconds:v.optional(v.number()),budgetId:v.optional(v.id('modelBudgets')),reservedMicros:v.optional(v.number()),chargedMicros:v.optional(v.number()),costBasis:v.optional(v.string()),inputPrice:v.optional(v.number()),outputPrice:v.optional(v.number())})
+    .index('key',['key']).index('provider_time',['provider','startedAt']),
+};

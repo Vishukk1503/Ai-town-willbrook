@@ -1,0 +1,162 @@
+{
+  "source": "outputs/bob-lucky-context-fixed-live-town.json",
+  "response": {
+    "reason": "Hunger and energy are moderate; private concern is arranging a meal. There is an open barter offer from Bob (id 62) for 1 turnip + 1 fish. I have 0 turnips and 0 fish, so I cannot fulfill it. I have no food and no ingredients. I need to eat, but I have no meals. I can forage or fish. Fishing requires a rod (I have 1) and is at the river. I am already at the river bank (position 18.66, 27 vs river 23,27 - close). I should fish to get food. The barter #62 is open but I lack the goods, so I can",
+    "speech": "Bob, I'm short on turnips and fish right now, so I can't take that trade just yet. Mind if I slip down to the river for a bit? I could use a proper supper, and the water's been quiet lately.",
+    "steps": [
+      {
+        "action": "decline:62",
+        "durationMinutes": null
+      },
+      {
+        "action": "fish",
+        "durationMinutes": 30
+      }
+    ]
+  },
+  "needs": {
+    "energy": 61.522983333293546,
+    "hunger": 62.36540000025548,
+    "lastFood": "meals",
+    "lastForage": 9537592,
+    "owner": "p:0",
+    "restedness": 39.868823529439574,
+    "variety": 70
+  },
+  "inventory": {
+    "fish": 0,
+    "meals": 0,
+    "rod": 1,
+    "seeds": 0,
+    "turnips": 0
+  },
+  "position": {
+    "x": 18.65875,
+    "y": 27
+  },
+  "bank": {
+    "x": 23,
+    "y": 27
+  },
+  "agreement": {
+    "acceptedBy": [
+      "p:2"
+    ],
+    "counters": 0,
+    "created": 10910856,
+    "escrow": [],
+    "expires": 11150856,
+    "id": 62,
+    "inputs": [
+      {
+        "item": "turnips",
+        "owner": "p:2",
+        "quantity": 1
+      },
+      {
+        "item": "fish",
+        "owner": "p:0",
+        "quantity": 1
+      }
+    ],
+    "kind": "barter",
+    "outputs": [
+      {
+        "item": "turnips",
+        "owner": "p:0",
+        "quantity": 1
+      },
+      {
+        "item": "fish",
+        "owner": "p:2",
+        "quantity": 1
+      }
+    ],
+    "participants": [
+      "p:2",
+      "p:0"
+    ],
+    "proposer": "p:2",
+    "status": "open",
+    "thread": 62
+  },
+  "bob": {
+    "decision": {
+      "actionId": "offer:p:0:turnips:1:fish:1",
+      "auditEnded": true,
+      "auditKey": "o:3718",
+      "chosenAt": 1794176174541,
+      "kind": "offer",
+      "label": "Offer 1 turnips for 1 fish from Lucky",
+      "needsAtChoice": {
+        "energy": 90.66673333330364,
+        "hunger": 23.2741333333974,
+        "restedness": 58.72895637261746
+      },
+      "reason": "Offer turnip for fish",
+      "source": "model",
+      "target": "p:0",
+      "until": 1794176179541
+    },
+    "inventory": {
+      "fish": 0,
+      "meals": 2,
+      "rod": 0,
+      "seeds": 0,
+      "turnips": 8
+    },
+    "name": "Bob",
+    "needs": {
+      "energy": 90.09196666663561,
+      "hunger": 24.067333333397432,
+      "lastFood": "meals",
+      "lastForage": 5524320,
+      "owner": "p:2",
+      "restedness": 57.95130931379428,
+      "variety": 88
+    },
+    "path": null,
+    "plan": {
+      "choice": "quiet_hour_then_home",
+      "conversationId": "c:3494",
+      "destination": {
+        "x": 14,
+        "y": 31
+      },
+      "events": [
+        {
+          "at": 1794172438860,
+          "clock": 5921484,
+          "kind": "plan_committed",
+          "x": 18,
+          "y": 29
+        },
+        {
+          "at": 1794172438860,
+          "clock": 5921500,
+          "kind": "wait_started",
+          "x": 18,
+          "y": 29
+        },
+        {
+          "at": 1794173650740,
+          "clock": 5950662,
+          "kind": "interrupted",
+          "x": 18,
+          "y": 29
+        }
+      ],
+      "id": "o:3498",
+      "partner": "p:0",
+      "reason": "Older plan needs reconsideration with explicit steps and duration",
+      "requested": 5921484,
+      "state": "interrupted",
+      "waitUntil": 5981500
+    },
+    "position": {
+      "x": 18,
+      "y": 28
+    },
+    "sleep": null
+  }
+}

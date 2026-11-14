@@ -1,0 +1,8 @@
+import {inventoryIssue,reviewDialogue} from '../convex/aiTown/dialogueController';
+import {initialDialogue,parseDialogue,applyDialogue} from '../convex/aiTown/dialogueState';
+const reply=(speech:string)=>parseDialogue(JSON.stringify({speech,intent:'share',continueConversation:true,topic:'supper',question:null,answersQuestion:false,proposal:null,response:'none',proposalId:null,privateConcern:null,eventReferences:[]}));
+test('owned quantities do not change merely because a speaker offers them',()=>{const bag={fish:1,turnip:2,meal:0};expect(inventoryIssue("I can give two fish.",bag)).toBe('insufficient_owned_resource');expect(inventoryIssue("I can offer one fish.",bag)).toBeUndefined();expect(bag.fish).toBe(1);});
+test('unsupported equipment is checked while preferences remain free',()=>{expect(inventoryIssue("I'll handle my pan.",{})).toBe('unsupported_equipment');expect(inventoryIssue('I dislike fish.',{})).toBeUndefined();});
+test('shared review rejects repeated content and closes farewells',()=>{const s=initialDialogue(),d=reply('See you at dawn.');expect(reviewDialogue(d,s,'bob',[],[])).toBeUndefined();expect(d.continueConversation).toBe(false);expect(reviewDialogue(reply('I would rather sit here quietly tonight.'),s,'bob',['I would rather sit here quietly tonight.'],[])).toBe('repetition');});
+
+test('spoken offers retain owner and response without implying execution',()=>{const s=initialDialogue();applyDialogue(s,'bob',{...reply('I can offer one turnip.'),intent:'offer'});applyDialogue(s,'stella',{...reply('Agreed.'),intent:'accept'});expect(s.commitments?.[0]).toEqual({speaker:'bob',text:'I can offer one turnip.',status:'acknowledged',respondent:'stella'});});

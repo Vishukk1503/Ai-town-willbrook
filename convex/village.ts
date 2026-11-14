@@ -1,0 +1,30 @@
+import {internalMutation} from './_generated/server';
+import {WorldMap} from './aiTown/worldMap';
+import {blockedWithPositions} from './aiTown/movement';
+import {villageLayout,Place,Rect} from './aiTown/villageState';
+import {stopEngine,startEngine} from './aiTown/main';
+
+export const build=internalMutation({args:{},handler:async ctx=>{
+  const status=await ctx.db.query('worldStatus').filter(q=>q.eq(q.field('isDefault'),true)).unique();
+  if(!status)throw new Error('Missing town.');
+  const world=await ctx.db.get(status.worldId),map=await ctx.db.query('maps').withIndex('worldId',q=>q.eq('worldId',status.worldId)).unique();
+  if(!world||!map||!world.garden||!world.economy)throw new Error('The existing garden and market are required.');
+  if(world.village)return {alreadyBuilt:true,places:world.village.places};
+  const descriptions=await ctx.db.query('playerDescriptions').withIndex('worldId',q=>q.eq('worldId',world._id)).collect();
+  const owner=(name:string)=>descriptions.find(d=>d.name===name)?.playerId;
+  if(!owner('Lucky')||!owner('Stella'))throw new Error('Missing residents.');
+  const m=new WorldMap(map),g=world.garden,e=world.economy;
+  const reserved:Rect[]=[{x:g.origin.x-1,y:g.origin.y-1,w:9,h:9},{x:e.market.x-1,y:e.market.y-1,w:6,h:6},{x:e.bank.x-1,y:e.bank.y-1,w:3,h:3},...world.players.map(p=>({x:Math.floor(p.position.x)-1,y:Math.floor(p.position.y)-1,w:3,h:3}))];
+  const start={x:e.market.x+1,y:e.market.y+3};
+  const layout=villageLayout(m.width,m.height,start,p=>!!blockedWithPositions(p,[],m),reserved);
+  const definitions=[{id:'tavern',name:'Hearth & Reed',kind:'tavern' as const,description:'A timber tavern with a sheltered courtyard. A place to pause and meet neighbors; food, drink and interiors are not simulated yet.'},{id:'lucky-home',name:'Lucky’s cottage',kind:'home' as const,owner:owner('Lucky'),description:'A small cottage for the returning storyteller. The doorstep is a quiet place to rest.'},{id:'stella-home',name:'Stella’s cottage',kind:'home' as const,owner:owner('Stella'),description:'A cottage near village trade, with somewhere to leave the bustle behind.'}];
+  const places:Place[]=definitions.map((d,i)=>({...d,footprint:layout.plots[i],entrance:{x:layout.plots[i].x+Math.floor(layout.plots[i].w/2),y:layout.plots[i].y+layout.plots[i].h}}));
+  places.push({id:'bob-home',name:'Bob’s home',kind:'home',owner:g.owner,footprint:{...g.home,w:3,h:3},entrance:{x:g.home.x+1,y:g.home.y+3},description:'Bob’s established home beside the turnip garden. Its doorstep offers a quiet rest.'});
+  const running=status.status==='running';if(running)await stopEngine(ctx,world._id);
+  await ctx.db.patch(world._id,{village:{places,paths:layout.paths,visits:[],events:[],nextEvent:0}});
+  await ctx.db.patch(map._id,{villageObstacles:layout.plots});
+  const lore=await ctx.db.query('worldLore').withIndex('world',q=>q.eq('worldId',world._id)).first();
+  if(lore)await ctx.db.patch(lore._id,{background:lore.background+'\nVillage places: Lucky and Stella each have a cottage; Bob has his established garden home. Hearth & Reed is a village tavern with a usable courtyard. Residents can visit these doorsteps and courtyard along village paths. No interiors, food service or overnight lodging are simulated yet. These are places, not an assigned quest.'});
+  if(running)await startEngine(ctx,world._id);
+  return {places,paths:layout.paths.map(p=>p.length),connected:true};
+}});

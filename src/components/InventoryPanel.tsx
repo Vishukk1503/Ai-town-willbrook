@@ -1,0 +1,10 @@
+import {useState} from 'react';
+import {Id} from '../../convex/_generated/dataModel';
+import {GameId} from '../../convex/aiTown/ids';
+import {Items} from '../../convex/aiTown/economyState';
+import {useSendInput} from '../hooks/sendInput';
+export default function InventoryPanel({engineId,owner,items,nearby,running}:{engineId:Id<'engines'>;owner:GameId<'players'>;items?:Items;nearby:{id:GameId<'players'>;name:string}[];running:boolean}){
+  const give=useSendInput(engineId,'giveItem'),[recipient,setRecipient]=useState(''),[item,setItem]=useState<keyof Items>('turnips'),[pending,setPending]=useState(false),[message,setMessage]=useState('');
+  const target=nearby.find(p=>p.id===recipient)??nearby[0];
+  return <section className="resident-inventory"><h4>Carried inventory</h4>{items?<><div className="resident-value-chips">{Object.entries(items).map(([key,n])=><span key={key}>{key==='rod'?'Fishing rod':key}: {n}</span>)}</div><details className="profile-story"><summary>Give an item to a nearby resident</summary><p>This directs an actual transfer in the simulation. Both residents must be nearby.</p><select aria-label="Item to give" value={item} onChange={e=>setItem(e.target.value as keyof Items)}>{Object.keys(items).map(k=><option key={k} value={k}>{k}</option>)}</select><select aria-label="Recipient" value={target?.id??''} onChange={e=>setRecipient(e.target.value)}>{!nearby.length&&<option value="">No resident nearby</option>}{nearby.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select><button disabled={!running||pending||!target||(items[item]??0)<1} onClick={()=>{setPending(true);setMessage('');void give({from:owner,to:target!.id,item,quantity:1}).then(result=>setMessage('error' in result?result.error!:'One item given.')).catch(e=>setMessage(String(e))).finally(()=>setPending(false));}}>Give one {item}</button>{!running&&<p>Resume town life to transfer items.</p>}{message&&<p role="status">{message}</p>}</details></>:<p className="inspector-note">Inventory is not initialized yet.</p>}</section>;
+}
